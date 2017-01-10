@@ -31,4 +31,18 @@ feature 'restaurants' do
     end
   end
 
+
+  context 'viewing restaurants' do
+    let!(:mamuska){ Restaurant.create(name:'mamuska')}
+
+    scenario 'lets a user view a restaurant' do
+      visit '/restaurants'
+      click_link 'mamuska'
+      expect(page).to have_content 'mamuska'
+      expect(current_path).to eq "/restaurants/#{mamuska.id}"
+    end
+
+  end
+
+
 end
