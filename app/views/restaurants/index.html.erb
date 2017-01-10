@@ -2,6 +2,12 @@
   <% @restaurants.each do |restaurant| %>
   <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
   <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
+  <% if restaurant.reviews.any? %>
+    <% restaurant.reviews.all.each { |review| %>
+      <%= review.thoughts %>
+      <% } %>
+  <% end %>
+  <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
   <% end %>
 <% else %>
   <h1>No restaurants yet</h1>
