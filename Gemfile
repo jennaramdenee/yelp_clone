@@ -56,4 +56,5 @@ group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'pry'
+  gem 'database_cleaner'
 end
