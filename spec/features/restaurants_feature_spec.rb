@@ -12,7 +12,7 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
-      Restaurant.create(name: "KFC")
+      Restaurant.create(name: "KFC", description: "Chicken housen")
     end
     scenario 'display restaurants' do
       visit '/restaurants'
@@ -26,6 +26,7 @@ feature 'restaurants' do
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: "KFC"
+      fill_in 'Description', with: "Chicken housen"
       click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
@@ -39,6 +40,20 @@ feature 'restaurants' do
       click_link "KFC"
       expect(page).to have_content "KFC"
       expect(current_path).to eq "/restaurants/#{kfc.id}"
+    end
+  end
+
+  context 'editing restaurants' do
+    before { Restaurant.create(name: "KFC", description: "Finger lickin' good") }
+    scenario 'lets a user edit a restaurant' do
+      visit '/restaurants'
+      click_link "Edit KFC"
+      fill_in 'Name', with: "Kentucky Fried Chicken"
+      fill_in 'Description', with: "Finger lickin' good"
+      click_button 'Update Restaurant'
+      expect(page).to have_content "Kentucky Fried Chicken"
+      expect(page).to have_content "Finger lickin' good"
+      expect(current_path).to eq '/restaurants'
     end
   end
 
