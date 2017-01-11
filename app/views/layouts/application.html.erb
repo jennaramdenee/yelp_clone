@@ -19,7 +19,12 @@
     <% end %>
 
     <div>YELP!!</div>
+
     <%= notice %>
+    <% if flash[:error] %>
+      <h3><%= flash[:error].join(" ") %></h3>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
