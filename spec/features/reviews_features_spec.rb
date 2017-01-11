@@ -1,11 +1,22 @@
 require 'rails_helper'
 
 feature 'reviewing' do
-  before { Restaurant.create name: "Youmiko Sushi" }
+  include Helpers
+
+  user = {
+    email: 'test@example.com',
+    password: 'testtest'
+  }
+
+  restaurant = {
+    name: "Itadaki Zen"
+  }
 
   scenario "allows users to leave a review using a form" do
+    sign_up(user)
+    add_restaurant(restaurant)
     visit '/restaurants'
-    click_link "Review Youmiko Sushi"
+    click_link "Review Itadaki Zen"
     fill_in "Thoughts", with: "A piece of heaven"
     select '5', from: "Rating"
     click_button "Leave Review"
