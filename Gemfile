@@ -60,4 +60,5 @@ group :test do
   gem 'pry'
   gem 'database_cleaner'
   gem "rspec-collection_matchers"
+  gem "shoulda"
 end

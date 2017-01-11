@@ -18,10 +18,13 @@ feature 'restaurants' do
   end
 
   context 'restaurants have been added' do
-    before do
-      Restaurant.create(name: 'Itadaki Zen')
-    end
     scenario 'display restaurants' do
+      sign_up(user)
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'Itadaki Zen'
+      click_button 'Create Restaurant'
+      # require "pry"; binding.pry
       visit '/restaurants'
       expect(page).to have_content('Itadaki Zen')
       expect(page).not_to have_content('No restaurants yet')

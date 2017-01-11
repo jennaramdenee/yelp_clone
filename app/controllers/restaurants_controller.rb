@@ -12,6 +12,7 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    require "pry"; binding.pry
     if @restaurant.save
       redirect_to '/restaurants'
     else
