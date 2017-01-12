@@ -8,6 +8,11 @@ feature 'restaurants' do
     password: 'testtest'
   }
 
+  user2 = {
+    email: 'test2@example.com',
+    password: 'test2test2'
+  }
+
   restaurant = {
     name: "Itadaki Zen"
   }
@@ -96,7 +101,20 @@ feature 'restaurants' do
       expect(page).not_to have_content 'Itadaki Zen'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
+
+    scenario "can't remove a restaurant if you have not created it" do
+      sign_up(user)
+      add_restaurant(restaurant)
+      click_link "Sign out"
+      sign_up(user2)
+      visit '/restaurants'
+      click_link 'Delete Itadaki Zen'
+      expect(page).to have_content "Cannot edit or delete a restaurant you did not create"
+    end
+
   end
+
+  
 
 
 end

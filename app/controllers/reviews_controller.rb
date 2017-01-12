@@ -6,12 +6,7 @@ class ReviewsController < ApplicationController
 
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
-    # if current_user.has_reviewed? @restaurant
-    #   flash.next[:error] = ["You can only review restaurant once"]
-    #   redirect_to '/restaurants'
-    # end
-    review = @restaurant.reviews.new(review_params)
-    review.user = current_user
+    review = @restaurant.build_with_user(review_params, current_user)
     if review.save
       redirect_to '/restaurants'
     else
@@ -25,7 +20,9 @@ class ReviewsController < ApplicationController
   end
 
   private
+
   def review_params
     params.require(:review).permit(:thoughts, :rating)
   end
+
 end

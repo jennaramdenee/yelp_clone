@@ -9,6 +9,14 @@ module Helpers
     click_button('Sign up')
   end
 
+  def sign_up2(user)
+    click_link('Sign up')
+    fill_in('Email', with: user2[:email])
+    fill_in('Password', with: user2[:password])
+    fill_in('Password confirmation', with: user2[:password])
+    click_button('Sign up')
+  end
+
   def add_restaurant(restaurant)
     visit '/restaurants'
     click_link 'Add a restaurant'
