@@ -58,7 +58,8 @@ group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'pry'
-  gem 'database_cleaner'
   gem "rspec-collection_matchers"
   gem "shoulda"
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
