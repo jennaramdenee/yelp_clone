@@ -1,7 +1,7 @@
 class RestaurantsController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index, :show]
-  before_action :restaurant_belongs_to_current_user?, :only => [:edit, :update, :destroy]
+  before_action :check_restaurant_belongs_to_current_user, :only => [:edit, :update, :destroy]
 
   def index
     @restaurants = Restaurant.all
@@ -37,11 +37,9 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
-    if restaurant_belongs_to_current_user?
-      @restaurant.destroy
-      flash[:notice] = 'Restaurant deleted successfully'
-      redirect_to '/restaurants'
-    end
+    @restaurant.destroy
+    flash[:notice] = 'Restaurant deleted successfully'
+    redirect_to root_path
   end
 
   private
@@ -50,7 +48,7 @@ class RestaurantsController < ApplicationController
     params.require(:restaurant).permit(:name, :description)
   end
 
-  def restaurant_belongs_to_current_user?
+  def check_restaurant_belongs_to_current_user
     @restaurant = Restaurant.find(params[:id])
     if current_user.id != @restaurant.user_id
       flash[:notice] = "Cannot edit or delete a restaurant you did not create"

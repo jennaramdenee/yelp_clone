@@ -114,7 +114,7 @@ feature 'restaurants' do
 
   end
 
-  
+
 
 
 end
