@@ -74,6 +74,17 @@ feature 'restaurants' do
       expect(page).to have_content 'Itadaki Zen'
       expect(current_path).to eq "/restaurants/#{Restaurant.first.id}"
     end
+
+    scenario "can view a restaurant even if you have not created it" do
+      sign_up(user)
+      add_restaurant(restaurant)
+      click_link "Sign out"
+      sign_up(user2)
+      visit '/restaurants'
+      click_link 'Itadaki Zen'
+      expect(page).to have_content 'Itadaki Zen'
+      expect(current_path).to eq "/restaurants/#{Restaurant.first.id}"
+    end
   end
 
   context 'editing restaurants' do
@@ -90,6 +101,17 @@ feature 'restaurants' do
       expect(page).to have_content "Cozy plaze with homemade picca"
       expect(current_path).to eq "/restaurants/#{Restaurant.first.id}"
     end
+
+    scenario "can't edit a restaurant if you have not created it" do
+      sign_up(user)
+      add_restaurant(restaurant)
+      click_link "Sign out"
+      sign_up(user2)
+      visit '/restaurants'
+      click_link 'Edit Itadaki Zen'
+      expect(page).to have_content "Cannot edit or delete a restaurant you did not create"
+    end
+
   end
 
   context ' deleting restaurants' do
