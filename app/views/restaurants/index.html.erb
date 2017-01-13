@@ -7,9 +7,11 @@
     <h2><%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %></h2>
 
     <% if restaurant.reviews.any? %>
-      <% restaurant.reviews.all.each { |review| %>
-        <%= review.thoughts %>
-        <% } %>
+      <% restaurant.reviews.all.each do |review| %>
+        <p><%= review.thoughts %></p>
+        <p><%= link_to "Endorse Review", review_endorsements_path(review), method: :post %></p>
+        <p><%= pluralize review.endorsements.count, 'endorsement' %></p>
+        <% end %>
     <% end %>
 
     <% if current_user %>
@@ -25,5 +27,5 @@
 <% end %>
 
 <% if user_signed_in? %>
-  <a href="/restaurants/new">Add a restaurant</a>
+  <%= link_to "Add a restaurant", new_restaurant_path %>
 <% end %>
